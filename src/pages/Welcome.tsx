@@ -2,8 +2,8 @@ import React from "react";
 
 import {Text, Image, StyleSheet, SafeAreaView, TouchableOpacity, View, Dimensions} from "react-native";
 import {Feather} from "@expo/vector-icons";
-import colors from "../../styles/colors";
-import fonts from "../../styles/fonts";
+import colors from "../styles/colors";
+import fonts from "../styles/fonts";
 import wateringImg from '../assets/watering.png'
 
 export function Welcome() {
