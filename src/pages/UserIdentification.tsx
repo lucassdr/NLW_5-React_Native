@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform} from "react-native";
+import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {Button} from "../components/Button";
 
@@ -51,35 +51,40 @@ export function UserIdentification() {
                 behavior={Platform.OS === 'ios' ? "padding" : "height"}
             >
 
-                <View style={styles.content}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-                    <View style={styles.form}>
+                    <View style={styles.content}>
 
-                        <View style={styles.header}>
+                        <View style={styles.form}>
 
-                            <Text style={styles.emoji}>
-                                {isFilled ? '😄' : '🙂'}
-                            </Text>
+                            <View style={styles.header}>
 
-                            <Text style={styles.title}>
-                                Como podemos {'\n'} chamar você?
-                         </Text>
+                                <Text style={styles.emoji}>
+                                    {isFilled ? '😄' : '🙂'}
+                                </Text>
 
-                        </View>
+                                <Text style={styles.title}>
+                                    Como podemos {'\n'} chamar você?
+                                </Text>
 
-                        <TextInput style={[styles.input, (isFocused || isFilled) && {borderColor: colors.green}]}
-                            placeholder="Digite um nome"
-                            onBlur={handleInputBlur}
-                            onFocus={handleInputFocus}
-                            onChangeText={handleInputChange} />
+                            </View>
 
-                        <View style={styles.footer}>
-                            <Button title="Confirmar" onPress={handleSubmit} />
+                            <TextInput style={[styles.input, (isFocused || isFilled) && {borderColor: colors.green}]}
+                                placeholder="Digite um nome"
+                                onBlur={handleInputBlur}
+                                onFocus={handleInputFocus}
+                                onChangeText={handleInputChange} />
+
+                            <View style={styles.footer}>
+                                <Button title="Confirmar" onPress={handleSubmit} />
+                            </View>
+
                         </View>
 
                     </View>
 
-                </View>
+                </TouchableWithoutFeedback>
+
 
             </KeyboardAvoidingView>
 
