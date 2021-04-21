@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, PlatformColor, Platform} from "react-native";
-
+import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform} from "react-native";
+import {useNavigation} from "@react-navigation/core";
 import {Button} from "../components/Button";
 
 
@@ -14,6 +14,7 @@ export function UserIdentification() {
     const [name, setName] = useState<string>()
 
 
+    const navigation = useNavigation()
 
     function handleInputBlur() {
         setIsFocused(false)
@@ -29,11 +30,16 @@ export function UserIdentification() {
         setName(value)
 
         //para funcionar em tempo real no Android
-        if(value.length > 1){
+        if (value.length > 1) {
             setIsFilled(true)
-        }else{
+        } else {
             setIsFilled(false)
         }
+    }
+
+
+    function handleSubmit() {
+        navigation.navigate('Confirmation')
     }
 
     return (
@@ -52,7 +58,7 @@ export function UserIdentification() {
                         <View style={styles.header}>
 
                             <Text style={styles.emoji}>
-                                {isFilled ? '😄' : '🙂'} 
+                                {isFilled ? '😄' : '🙂'}
                             </Text>
 
                             <Text style={styles.title}>
@@ -68,7 +74,7 @@ export function UserIdentification() {
                             onChangeText={handleInputChange} />
 
                         <View style={styles.footer}>
-                            <Button />
+                            <Button title="Confirmar" onPress={handleSubmit} />
                         </View>
 
                     </View>

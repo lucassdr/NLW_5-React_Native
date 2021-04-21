@@ -8,6 +8,7 @@ import fonts from '../styles/fonts'
 
 
 export function Confirmation() {
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -26,7 +27,7 @@ export function Confirmation() {
                 </Text>
 
                 <View style={styles.footer}>
-                    <Button />
+                    <Button title="Começar" />
                 </View>
 
             </View>
