@@ -1,8 +1,19 @@
 import React, {useState} from "react";
-import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, Alert} from "react-native";
+import {
+    StyleSheet,
+    SafeAreaView,
+    Text,
+    View,
+    TextInput,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Platform,
+    Keyboard,
+    Alert
+} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {Button} from "../components/Button";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
@@ -38,15 +49,17 @@ export function UserIdentification() {
     }
 
 
-    function handleSubmit() {
+    async function handleSubmit() {
 
         if (!name) {
-            return Alert.alert("Ops!","Me diz como chamar você 😢")
+            return Alert.alert("Ops!", "Me diz como chamar você 😢")
         }
 
-        if(name.length < 2){
-            return Alert.alert("Ops!","Ainda não conhecemos um nome com uma letra apenas 😢")
-        }
+        // if (name.length < 2) {
+        //     return Alert.alert("Ops!", "Ainda não conhecemos um nome com uma letra apenas 😢")
+        // }
+
+        await AsyncStorage.setItem("@plantmanager:user", `${name}`)
 
         navigation.navigate('Confirmation')
     }
