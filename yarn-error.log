@@ -1,5 +1,5 @@
 Arguments: 
-  /home/lucassdr/.nvm/versions/node/v10.23.0/bin/node /usr/share/yarn/bin/yarn.js add @react-native-storage/async-storage
+  /home/lucassdr/.nvm/versions/node/v10.23.0/bin/node /usr/share/yarn/bin/yarn.js add @react-native-community/datetimepick
 
 PATH: 
   /home/lucassdr/.sdkman/candidates/java/current/bin:/home/lucassdr/.nvm/versions/node/v10.23.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@react-native-storage%2fasync-storage: Not found
+  Error: https://registry.yarnpkg.com/@react-native-community%2fdatetimepick: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66988:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140749:22)
       at Request.emit (events.js:198:13)
@@ -39,6 +39,7 @@ npm manifest:
     "dependencies": {
       "@expo-google-fonts/jost": "^0.1.0",
       "@expo/vector-icons": "^12.0.0",
+      "@react-native-async-storage/async-storage": "^1.13.0",
       "@react-native-community/masked-view": "0.1.10",
       "@react-navigation/native": "^5.9.4",
       "@react-navigation/stack": "^5.14.4",
@@ -1693,6 +1694,13 @@ Lockfile:
     dependencies:
       "@babel/runtime" "^7.7.2"
       regenerator-runtime "^0.13.3"
+  
+  "@react-native-async-storage/async-storage@^1.13.0":
+    version "1.15.4"
+    resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.4.tgz#cdba464ca3bb9f10ec538342cbf2520c06f453ab"
+    integrity sha512-pC0MS6UBuv/YiVAxtzi7CgUed8oCQNYMtGt0yb/I9fI/BWTiJK5cj4YtW2XtL95K5IuvPX/6uGWaouZ8KqXwdg==
+    dependencies:
+      deep-assign "^3.0.0"
   
   "@react-native-community/cli-debugger-ui@^4.13.1":
     version "4.13.1"

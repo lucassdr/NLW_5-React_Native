@@ -3,6 +3,8 @@ import {Alert, Text, Image, StyleSheet, FlatList, ScrollView, Platform, View, To
 import {SvgFromUri} from "react-native-svg";
 import {Button} from "../components/Button";
 import {useRoute} from "@react-navigation/core";
+import DateTimerPicker, {Event} from "@react-native-community/datetimepicker";
+import {format, isBefore} from "date-fns";
 
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
@@ -30,6 +32,30 @@ export function PlantSave() {
     const route = useRoute()
 
     const {plant} = route.params as IParams
+
+    const [selectedDateTime, setSelectedDateTime] = useState(new Date())
+    const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios')
+
+
+    function handleChangeTime(event: Event, dateTime: Date | undefined) {
+
+        if (Platform.OS === 'android') {
+            setShowDatePicker(oldState => !oldState)
+        }
+
+        if (dateTime && isBefore(dateTime, new Date())) {
+            setSelectedDateTime(new Date())
+            return Alert.alert("Ops!", "Escolha uma hora futura!")
+        }
+
+        if (dateTime) {
+            setSelectedDateTime(dateTime)
+        }
+    }
+
+    function handleOpenDateTimePickerForAndroid() {
+        setShowDatePicker(oldState => !oldState)
+    }
 
     return (
         <View style={styles.container}>
@@ -59,6 +85,23 @@ export function PlantSave() {
                 <Text style={styles.alertLabel}>
                     Escolha o melhor horário para ser lembrado
                 </Text>
+
+                {showDatePicker &&
+                    <DateTimerPicker
+                        value={selectedDateTime}
+                        mode="time"
+                        display="spinner"
+                        onChange={handleChangeTime} />
+                }
+
+                {
+                    Platform.OS === 'android' &&
+                    <TouchableOpacity style={styles.dateTimePickerButton} onPress={handleOpenDateTimePickerForAndroid}>
+                        <Text style={styles.dateTimePickerText}>
+                            {`Mudar ${format(selectedDateTime, 'HH:mm')}`}
+                        </Text>
+                    </TouchableOpacity>
+                }
 
                 <Button title="Cadastrar planta" onPress={() => { }} />
 
@@ -129,5 +172,17 @@ const styles = StyleSheet.create({
         color: colors.heading,
         fontSize: 12,
         marginBottom: 5
+    },
+    dateTimePickerButton: {
+        width: "100%",
+        alignItems: "center",
+        paddingVertical: 40,
+    },
+    dateTimePickerText:{
+        color: colors.heading,
+        fontSize:24,
+        fontFamily: fonts.text
     }
+
+
 })
