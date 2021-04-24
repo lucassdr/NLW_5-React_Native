@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard} from "react-native";
+import {StyleSheet, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, Alert} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {Button} from "../components/Button";
 
@@ -39,6 +39,15 @@ export function UserIdentification() {
 
 
     function handleSubmit() {
+
+        if (!name) {
+            return Alert.alert("Ops!","Me diz como chamar você 😢")
+        }
+
+        if(name.length < 2){
+            return Alert.alert("Ops!","Ainda não conhecemos um nome com uma letra apenas 😢")
+        }
+
         navigation.navigate('Confirmation')
     }
 
