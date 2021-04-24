@@ -5,20 +5,20 @@ import {
     Text,
     Image,
     FlatList,
-    ScrollView
+    ScrollView,
+    Alert
 } from "react-native";
 import {Header} from '../components/Header';
 
 import colors from '../styles/colors';
 
 import waterdrop from '../assets/waterdrop.png'
-import {loadPlant, PlantProps} from '../libs/storage';
+import {loadPlant, PlantProps, removePlant} from '../libs/storage';
 import {formatDistance} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import fonts from '../styles/fonts';
 import {PlantCardSecondary} from '../components/PlantCardSecondary';
 import {Load} from '../components/Load';
-
 
 export function MyPlant() {
 
@@ -44,6 +44,30 @@ export function MyPlant() {
         loadStorageDate()
     }, [])
 
+    function handleRemove(plant: PlantProps) {
+        Alert.alert("Atenção!", `Deseja remover a ${plant.name}?`, [
+            {
+                text: "Não",
+                style: 'cancel'
+            },
+            {
+                text: "Sim",
+                onPress: async () => {
+                    try {
+
+                        await removePlant(plant.id)
+
+                        setMyPlants((oldData) =>
+                            oldData.filter((item) => item.id !== plant.id)
+                        )
+                    } catch (e) {
+                        Alert.alert("Ops!", "Não foi possível remover")
+                    }
+                }
+            }
+        ])
+    }
+
     if (loading) {
         return <Load />
     } else {
@@ -62,14 +86,14 @@ export function MyPlant() {
 
                 <View style={styles.plants}>
                     <Text style={styles.plantsTitle}>
-                        Próximas regadadas
+                        Próximas regadas
                 </Text>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <FlatList
                             data={myPlants}
                             keyExtractor={(item) => String(item.id)}
                             renderItem={({item}) => (
-                                <PlantCardSecondary data={item} />
+                                <PlantCardSecondary data={item} handleRemove={() => {handleRemove(item)}} />
                             )}
                             showsVerticalScrollIndicator={false}
                             contentContainerStyle={{flex: 1}}
