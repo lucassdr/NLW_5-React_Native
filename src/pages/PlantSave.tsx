@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Alert, Text, Image, StyleSheet, FlatList, ScrollView, Platform, View, TouchableOpacity} from "react-native";
 import {SvgFromUri} from "react-native-svg";
 import {Button} from "../components/Button";
-import {useRoute} from "@react-navigation/core";
+import {useNavigation, useRoute} from "@react-navigation/core";
 import DateTimerPicker, {Event} from "@react-native-community/datetimepicker";
 import {format, isBefore} from "date-fns";
 
@@ -20,6 +20,7 @@ interface IParams {
 export function PlantSave() {
 
     const route = useRoute()
+    const navigation = useNavigation()
 
     const {plant} = route.params as IParams
 
@@ -54,6 +55,15 @@ export function PlantSave() {
                 ...plant,
                 dateTimeNotification: selectedDateTime
             })
+
+            navigation.navigate('Confirmation', {
+                title: 'Tudo certo',
+                subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
+                buttonTitle: 'Muito obrigado :D',
+                icon: 'hub',
+                nextScreen: 'MyPlant'
+            })
+
         } catch (e) {
             return Alert.alert("Ops!", "Não foi possível salvar")
         }
