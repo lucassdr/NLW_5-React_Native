@@ -55,13 +55,17 @@ export function UserIdentification() {
             return Alert.alert("Ops!", "Me diz como chamar você 😢")
         }
 
-        // if (name.length < 2) {
-        //     return Alert.alert("Ops!", "Ainda não conhecemos um nome com uma letra apenas 😢")
-        // }
+        if (name.length < 2) {
+            return Alert.alert("Ops!", "Ainda não conhecemos um nome com uma letra apenas 😢")
+        }
 
-        await AsyncStorage.setItem("@plantmanager:user", `${name}`)
+        try {
+            await AsyncStorage.setItem("@plantmanager:user", `${name}`)
+            navigation.navigate('Confirmation')
+        } catch (e) {
+            return Alert.alert("Ops!", "Não foi possível salvar o seu nome 😢")
+        }
 
-        navigation.navigate('Confirmation')
     }
 
     return (

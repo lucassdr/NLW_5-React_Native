@@ -13,33 +13,19 @@ import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import api from "../services/api";
 import {PlantCardPrimary} from "../components/PlantCardPrimary";
+import {PlantProps} from "../libs/storage";
 
 interface IEnviromentsProps {
     key: string;
     title: string;
 }
 
-interface IPlantProps {
-    id: string;
-    name: string;
-    about: string;
-    water_tips: string;
-    photo: string;
-    environments: [string];
-    frequency: {
-        times: number;
-        repeat_every: string;
-    }
-}
-
-
 export function PlantSelect() {
     const navigation = useNavigation()
 
-
     const [enviroments, setEnviroments] = useState<IEnviromentsProps[]>([])
-    const [plants, setPlants] = useState<IPlantProps[]>([])
-    const [filteredPlants, setFilteredPlants] = useState<IPlantProps[]>([])
+    const [plants, setPlants] = useState<PlantProps[]>([])
+    const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([])
     const [enviromentsSelected, setEnviromentsSelected] = useState('all')
     const [loading, setLoading] = useState(true)
 

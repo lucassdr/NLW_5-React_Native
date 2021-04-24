@@ -11,20 +11,10 @@ import fonts from "../styles/fonts";
 
 import waterdrop from '../assets/waterdrop.png'
 import {getBottomSpace} from "react-native-iphone-x-helper";
+import {loadPlant, PlantProps, savePlant} from "../libs/storage";
 
 interface IParams {
-    plant: {
-        id: string;
-        name: string;
-        about: string;
-        water_tips: string;
-        photo: string;
-        environments: [string];
-        frequency: {
-            times: number;
-            repeat_every: string;
-        }
-    }
+    plant: PlantProps
 }
 
 export function PlantSave() {
@@ -55,6 +45,18 @@ export function PlantSave() {
 
     function handleOpenDateTimePickerForAndroid() {
         setShowDatePicker(oldState => !oldState)
+    }
+
+    async function handleSave() {
+
+        try {
+            await savePlant({
+                ...plant,
+                dateTimeNotification: selectedDateTime
+            })
+        } catch (e) {
+            return Alert.alert("Ops!", "Não foi possível salvar")
+        }
     }
 
     return (
@@ -103,7 +105,7 @@ export function PlantSave() {
                     </TouchableOpacity>
                 }
 
-                <Button title="Cadastrar planta" onPress={() => { }} />
+                <Button title="Cadastrar planta" onPress={handleSave} />
 
             </View>
         </View>
@@ -178,9 +180,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingVertical: 40,
     },
-    dateTimePickerText:{
+    dateTimePickerText: {
         color: colors.heading,
-        fontSize:24,
+        fontSize: 24,
         fontFamily: fonts.text
     }
 
