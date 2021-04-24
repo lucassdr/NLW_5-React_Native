@@ -17,6 +17,7 @@ import {formatDistance} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import fonts from '../styles/fonts';
 import {PlantCardSecondary} from '../components/PlantCardSecondary';
+import {Load} from '../components/Load';
 
 
 export function MyPlant() {
@@ -43,38 +44,42 @@ export function MyPlant() {
         loadStorageDate()
     }, [])
 
-    return (
-        <View style={styles.container}>
-            <Header />
+    if (loading) {
+        return <Load />
+    } else {
+        return (
+            <View style={styles.container}>
+                <Header />
 
-            <View style={styles.spotlight}>
+                <View style={styles.spotlight}>
 
-                <Image source={waterdrop} style={styles.spotlightImage} />
+                    <Image source={waterdrop} style={styles.spotlightImage} />
 
-                <Text style={styles.spotlightText}>
-                    {nextWaterd}
+                    <Text style={styles.spotlightText}>
+                        {nextWaterd}
+                    </Text>
+                </View>
+
+                <View style={styles.plants}>
+                    <Text style={styles.plantsTitle}>
+                        Próximas regadadas
                 </Text>
-            </View>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <FlatList
+                            data={myPlants}
+                            keyExtractor={(item) => String(item.id)}
+                            renderItem={({item}) => (
+                                <PlantCardSecondary data={item} />
+                            )}
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{flex: 1}}
+                        />
+                    </ScrollView>
+                </View>
 
-            <View style={styles.plants}>
-                <Text style={styles.plantsTitle}>
-                    Próximas regadadas
-                </Text>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <FlatList
-                        data={myPlants}
-                        keyExtractor={(item) => String(item.id)}
-                        renderItem={({item}) => (
-                            <PlantCardSecondary data={item} />
-                        )}
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{flex: 1}}
-                    />
-                </ScrollView>
             </View>
-
-        </View>
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({
