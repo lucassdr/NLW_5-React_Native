@@ -34,6 +34,8 @@ interface IPlantProps {
 
 
 export function PlantSelect() {
+    const navigation = useNavigation()
+
 
     const [enviroments, setEnviroments] = useState<IEnviromentsProps[]>([])
     const [plants, setPlants] = useState<IPlantProps[]>([])
@@ -44,8 +46,6 @@ export function PlantSelect() {
     //  paginação
     const [page, setPage] = useState(1)
     const [loadingMore, setLoadingMore] = useState(false)
-    const [loadedAll, setLoadedAll] = useState(false)
-
 
     function handleEnviromentSelected(enviroment: string) {
         setEnviromentsSelected(enviroment)
@@ -86,7 +86,10 @@ export function PlantSelect() {
 
         setLoading(false)
         setLoadingMore(false)
+    }
 
+    function handlePlantSelect(plant: IPlantProps) {
+        navigation.navigate("PlantSave", {plant})
     }
 
     useEffect(() => {
@@ -152,7 +155,7 @@ export function PlantSelect() {
                         data={filteredPlants}
                         keyExtractor={(item) => String(item.id)}
                         renderItem={({item}) => (
-                            <PlantCardPrimary data={item} />
+                            <PlantCardPrimary data={item} onPress={() => handlePlantSelect(item)} />
                         )}
                         showsVerticalScrollIndicator={false}
                         numColumns={2}
