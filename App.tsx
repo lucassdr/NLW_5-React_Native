@@ -16,9 +16,7 @@ export default function App() {
 
 
   useEffect(() => {
-
     getAllScheduledNotifications()
-
   }, [])
 
   async function addNotificationsReceivedListener() {
