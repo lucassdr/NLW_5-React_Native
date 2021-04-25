@@ -35,7 +35,7 @@ export async function savePlant(plant: PlantProps): Promise<void> {
         if (repeat_every === 'week') {
             const interval = Math.trunc(7 / times)
             nexTime.setDate(now.getDate() + interval)
-        }else {
+        } else {
             nexTime.setDate(now.getDate() + 1)
         }
 
@@ -102,9 +102,14 @@ export async function loadPlant(): Promise<PlantProps[]> {
 
 export async function removePlant(id: string): Promise<void> {
     const data = await AsyncStorage.getItem("@plantmanager:plants")
+
     const plants = data ? (JSON.parse(data) as StoragePlantProps) : {}
 
-    await Notifications.cancelScheduledNotificationAsync(plants[id].notificationId)
+    try {
+        await Notifications.cancelScheduledNotificationAsync(plants[id].notificationId)
+    } catch (e) {
+        console.error("Erro ao cancelar a notificação de uma plata cancelada")
+    }
 
     delete plants[id]
 
