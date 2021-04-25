@@ -54,7 +54,6 @@ export function MyPlant() {
                 text: "Sim",
                 onPress: async () => {
                     try {
-
                         await removePlant(plant.id)
 
                         setMyPlants((oldData) =>
